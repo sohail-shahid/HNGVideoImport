@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'HNGVideoImport_Example', :exclusive => true do
+  pod "HNGVideoImport", :path => "../"
+end
+
+target 'HNGVideoImport_Tests', :exclusive => true do
+  pod "HNGVideoImport", :path => "../"
+
+  
+end
