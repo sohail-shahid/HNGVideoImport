@@ -1,0 +1,14 @@
+PODS:
+  - HNGVideoImport (0.1.0)
+
+DEPENDENCIES:
+  - HNGVideoImport (from `../`)
+
+EXTERNAL SOURCES:
+  HNGVideoImport:
+    :path: ../
+
+SPEC CHECKSUMS:
+  HNGVideoImport: 37dbee2455d295000ff10218ff5f36f71c782cc1
+
+COCOAPODS: 0.39.0
