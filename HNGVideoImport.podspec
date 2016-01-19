@@ -27,8 +27,10 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-
+  s.ios.deployment_target = '8.0'
   s.source_files = 'Pod/Classes/**/*'
+  s.frameworks = 'UIKit', 'MapKit'
+
   s.resource_bundles = {
     'HNGVideoImport' => ['Pod/Assets/*.png']
   }
