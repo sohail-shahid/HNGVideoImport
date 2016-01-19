@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "sohail" => "sohail0059@gmail.com" }
-  s.source           = { :git => "https://github.com/sohail-khan/HNGVideoImport.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/sohail-khan/HNGVideoImport.git", :branch => "master",:tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/sohail059'
 
   s.platform     = :ios, '8.0'
