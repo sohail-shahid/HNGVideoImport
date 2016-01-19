@@ -13,12 +13,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let _ : HelloViewController = HelloViewController()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        //let vc = HNGVideoImportViewController(nibName:"HNGVideoImportViewController", bundle:nil)
+        //self.presentViewController(vc, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @IBAction func showImportViewController(sender: AnyObject) {
+        HNGVideoImportViewController.showVideoImportViewController(self)
+
     }
 
 }

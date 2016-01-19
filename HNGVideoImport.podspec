@@ -16,7 +16,9 @@ Pod::Spec.new do |s|
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
-  s.description      = "This libaray import videos from photo app"
+
+
+  s.description      = "This libaray import videos from photo app. Working on it"
 
   s.homepage         = "https://github.com/sohail-khan/HNGVideoImport"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
@@ -29,7 +31,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.ios.deployment_target = '8.0'
   s.source_files = 'Pod/Classes/*.*'
-
+  s.resources = ["Pod/Assets/*.png","Pod/Classes/*.xib"]
   s.resource_bundles = {
     'HNGVideoImport' => ['Pod/Assets/*.png']
   }

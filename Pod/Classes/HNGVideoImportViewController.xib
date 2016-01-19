@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HNGVideoImportViewController" customModule="HNGVideoImport" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="014-XX-9kw">
+                    <rect key="frame" x="0.0" y="0.0" width="736" height="64"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvo-2z-JI5">
+                            <rect key="frame" x="10" y="20" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="0cF-1Q-qo2"/>
+                                <constraint firstAttribute="width" constant="24" id="Say-d6-sx7"/>
+                            </constraints>
+                            <state key="normal" image="previous"/>
+                            <connections>
+                                <action selector="dismissViewControllerButtonPressed:" destination="-1" eventType="touchUpInside" id="jXT-mb-cDX"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lv4-e3-6r9">
+                            <rect key="frame" x="689" y="17" width="21" height="29"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="29" id="4IH-0t-dSO"/>
+                                <constraint firstAttribute="width" constant="21" id="qfq-Xp-glg"/>
+                            </constraints>
+                            <state key="normal" image="upload"/>
+                            <connections>
+                                <action selector="shareButtonPressed:" destination="-1" eventType="touchUpInside" id="Hr5-YG-9Zx"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.33725490200000002" green="0.32156862749999998" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="wvo-2z-JI5" firstAttribute="centerY" secondItem="014-XX-9kw" secondAttribute="centerY" id="AbY-2h-9qo"/>
+                        <constraint firstItem="wvo-2z-JI5" firstAttribute="leading" secondItem="014-XX-9kw" secondAttribute="leading" constant="10" id="Ecc-2m-I42"/>
+                        <constraint firstItem="Lv4-e3-6r9" firstAttribute="centerY" secondItem="014-XX-9kw" secondAttribute="centerY" id="EpH-mb-lef"/>
+                        <constraint firstAttribute="trailing" secondItem="Lv4-e3-6r9" secondAttribute="trailing" constant="26" id="cV3-Ic-18Y"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="014-XX-9kw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6P7-zA-vRL"/>
+                <constraint firstItem="014-XX-9kw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FIS-eg-Cql"/>
+                <constraint firstItem="014-XX-9kw" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.154" id="I0v-Ir-F9q"/>
+                <constraint firstAttribute="trailing" secondItem="014-XX-9kw" secondAttribute="trailing" id="aCB-DE-77X"/>
+            </constraints>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="previous" width="15" height="22"/>
+        <image name="upload" width="21" height="29"/>
+    </resources>
+</document>
