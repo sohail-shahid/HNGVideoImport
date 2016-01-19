@@ -12,6 +12,7 @@
 		2102763AC571CCC894AD1ED7C56C3274 /* HNGVideoImport.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC4A8B0BEFF9963F1971588822BD1348 /* HNGVideoImport.bundle */; };
 		2104D07616E2816C6EF141B1E95DB0AE /* Pods-HNGVideoImport_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 027E3E78DF1AEE8F18DF11BD22562300 /* Pods-HNGVideoImport_Tests-dummy.m */; };
 		58481E324EF6073EDE7B417441C121A3 /* HNGVideoImport-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4513D3E7462612F204DC5E3848D6B6D4 /* HNGVideoImport-dummy.m */; };
+		59F6A7D91C4E39B10046FA5A /* HelloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F6A7D81C4E39B10046FA5A /* HelloViewController.swift */; };
 		6768A2E452AA03D8CD351E4C7178C880 /* Pods-HNGVideoImport_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 157EC211CDD43E5B9A7B108842406EF0 /* Pods-HNGVideoImport_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7090F911739DF248A09CF83468D3F290 /* Pods-HNGVideoImport_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 29070684121F39F823848C3EDB583AEB /* Pods-HNGVideoImport_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B6660CBB1210085F04CD218695E21F1 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BA63E029485BA5A577F97941B1556B /* ReplaceMe.swift */; };
@@ -61,6 +62,7 @@
 		4513D3E7462612F204DC5E3848D6B6D4 /* HNGVideoImport-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HNGVideoImport-dummy.m"; sourceTree = "<group>"; };
 		4E01461ECDD061818BE10D2CD74B4B60 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50C508C6854135AF060F543D4D6FF420 /* Pods-HNGVideoImport_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HNGVideoImport_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		59F6A7D81C4E39B10046FA5A /* HelloViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloViewController.swift; sourceTree = "<group>"; };
 		671CDDB3226BE4FD93DE466374197DED /* Pods-HNGVideoImport_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HNGVideoImport_Example.release.xcconfig"; sourceTree = "<group>"; };
 		7684928D316F2E29FF237CC946E3C48C /* Pods-HNGVideoImport_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HNGVideoImport_Example.modulemap"; sourceTree = "<group>"; };
 		86A07C65751A36E73A0E52FE4C615067 /* Pods-HNGVideoImport_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HNGVideoImport_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				B6BA63E029485BA5A577F97941B1556B /* ReplaceMe.swift */,
+				59F6A7D81C4E39B10046FA5A /* HelloViewController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59F6A7D91C4E39B10046FA5A /* HelloViewController.swift in Sources */,
 				58481E324EF6073EDE7B417441C121A3 /* HNGVideoImport-dummy.m in Sources */,
 				7B6660CBB1210085F04CD218695E21F1 /* ReplaceMe.swift in Sources */,
 			);
