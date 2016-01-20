@@ -35,6 +35,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'HNGVideoImport' => ['Pod/Assets/*.png']
   }
+    s.frameworks = 'UIKit', 'Photos'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
