@@ -12,6 +12,7 @@
 		2102763AC571CCC894AD1ED7C56C3274 /* HNGVideoImport.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC4A8B0BEFF9963F1971588822BD1348 /* HNGVideoImport.bundle */; };
 		2104D07616E2816C6EF141B1E95DB0AE /* Pods-HNGVideoImport_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 027E3E78DF1AEE8F18DF11BD22562300 /* Pods-HNGVideoImport_Tests-dummy.m */; };
 		58481E324EF6073EDE7B417441C121A3 /* HNGVideoImport-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4513D3E7462612F204DC5E3848D6B6D4 /* HNGVideoImport-dummy.m */; };
+		59028F171C50BFCE00D4EB31 /* ImageResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59F47E331C4E717300C33A69 /* ImageResources.xcassets */; };
 		5934CA731C4E499E00E761E5 /* HNGVideoImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5934CA711C4E499E00E761E5 /* HNGVideoImportViewController.swift */; };
 		5934CA741C4E499E00E761E5 /* HNGVideoImportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5934CA721C4E499E00E761E5 /* HNGVideoImportViewController.xib */; };
 		593F722A1C4F63AB00B125BC /* HNGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F72291C4F63AB00B125BC /* HNGConstants.swift */; };
@@ -436,6 +437,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59028F171C50BFCE00D4EB31 /* ImageResources.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

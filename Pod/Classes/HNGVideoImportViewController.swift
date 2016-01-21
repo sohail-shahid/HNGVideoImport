@@ -165,6 +165,30 @@ public class HNGVideoImportViewController: UIViewController {
 
     }
     
+    // MARK: - CollectionView Delegate
+
+    func collectionView(collectionView: UICollectionView,willDisplayCell cell:UICollectionViewCell,forItemAtIndexPath indexPath: NSIndexPath){
+        
+        if let dowCastCell = cell as? VideoCollectionViewCell {
+            
+            dowCastCell.playVideo()
+            
+        }
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView,didEndDisplayingCell cell: UICollectionViewCell,forItemAtIndexPath indexPath: NSIndexPath){
+    
+        if let dowCastCell = cell as? VideoCollectionViewCell {
+            
+            dowCastCell.puseVideo()
+            
+        }
+    }
+    
+    
+    // MARK: - FlowLayOut Delegate
+
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{

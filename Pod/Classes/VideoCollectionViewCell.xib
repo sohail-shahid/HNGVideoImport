@@ -21,6 +21,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t4U-7e-nMF">
                                 <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfj-Bh-6zH">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SectionHeaderChoose" translatesAutoresizingMaskIntoConstraints="NO" id="1uN-2C-Hex">
                                 <rect key="frame" x="146" y="8" width="26" height="26"/>
                                 <constraints>
@@ -39,7 +42,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pause" translatesAutoresizingMaskIntoConstraints="NO" id="zuF-If-LjS">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sound-pause" translatesAutoresizingMaskIntoConstraints="NO" id="zuF-If-LjS">
                                         <rect key="frame" x="8" y="6" width="18" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zuF-If-LjS" secondAttribute="height" multiplier="9:14" id="rDD-kz-Qq0"/>
@@ -56,19 +59,43 @@
                                     <constraint firstAttribute="trailing" secondItem="BnJ-Nb-qSf" secondAttribute="trailing" constant="8" id="vgg-Q9-9e0"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjy-8B-mVl">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="68"/>
+                                <connections>
+                                    <action selector="selectUnSelectButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="4ja-qR-gAX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7C6-tI-ymc">
+                                <rect key="frame" x="0.0" y="68" width="180" height="67"/>
+                                <connections>
+                                    <action selector="volumeButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="O8S-8D-c93"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Sfj-Bh-6zH" secondAttribute="bottom" id="3L5-mH-buI"/>
                             <constraint firstItem="t4U-7e-nMF" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="9A8-is-j9V"/>
                             <constraint firstItem="Bof-3j-6Mk" firstAttribute="height" secondItem="fPh-aW-s1M" secondAttribute="height" multiplier="0.296" id="9xn-1X-phX"/>
+                            <constraint firstItem="Sfj-Bh-6zH" firstAttribute="top" secondItem="fPh-aW-s1M" secondAttribute="top" id="Ajg-RD-O5S"/>
+                            <constraint firstItem="Sfj-Bh-6zH" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="EfO-CQ-Rge"/>
                             <constraint firstAttribute="trailing" secondItem="1uN-2C-Hex" secondAttribute="trailing" constant="8" id="FHR-bh-Xyb"/>
+                            <constraint firstItem="7C6-tI-ymc" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="H63-oJ-r5T"/>
+                            <constraint firstAttribute="trailing" secondItem="fjy-8B-mVl" secondAttribute="trailing" id="H8p-iG-dDs"/>
                             <constraint firstAttribute="trailing" secondItem="t4U-7e-nMF" secondAttribute="trailing" id="KK7-xP-Qel"/>
+                            <constraint firstItem="7C6-tI-ymc" firstAttribute="height" secondItem="fPh-aW-s1M" secondAttribute="height" multiplier="0.5" id="LeA-Q9-vOm"/>
+                            <constraint firstItem="fjy-8B-mVl" firstAttribute="top" secondItem="fPh-aW-s1M" secondAttribute="top" id="OFV-fQ-jGp"/>
+                            <constraint firstAttribute="trailing" secondItem="7C6-tI-ymc" secondAttribute="trailing" id="R7D-WN-zIU"/>
                             <constraint firstItem="1uN-2C-Hex" firstAttribute="height" secondItem="fPh-aW-s1M" secondAttribute="height" multiplier="0.192" id="TaQ-Ai-Phd"/>
                             <constraint firstItem="t4U-7e-nMF" firstAttribute="top" secondItem="fPh-aW-s1M" secondAttribute="top" id="UAP-eT-YV3"/>
+                            <constraint firstAttribute="bottom" secondItem="7C6-tI-ymc" secondAttribute="bottom" id="YmX-Ld-FKY"/>
+                            <constraint firstItem="fjy-8B-mVl" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="fmm-nB-ioW"/>
                             <constraint firstAttribute="trailing" secondItem="Bof-3j-6Mk" secondAttribute="trailing" id="iwq-fY-LyA"/>
+                            <constraint firstItem="fjy-8B-mVl" firstAttribute="height" secondItem="fPh-aW-s1M" secondAttribute="height" multiplier="0.5" id="kK0-d2-ONd"/>
                             <constraint firstItem="1uN-2C-Hex" firstAttribute="top" secondItem="fPh-aW-s1M" secondAttribute="top" constant="8" id="onU-zb-Sxi"/>
                             <constraint firstItem="Bof-3j-6Mk" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="pAr-Bg-pTc"/>
                             <constraint firstAttribute="bottom" secondItem="Bof-3j-6Mk" secondAttribute="bottom" id="pZU-Px-vVQ"/>
+                            <constraint firstAttribute="trailing" secondItem="Sfj-Bh-6zH" secondAttribute="trailing" id="uP3-ek-41p"/>
                             <constraint firstAttribute="bottom" secondItem="t4U-7e-nMF" secondAttribute="bottom" id="xxl-Rr-Cx5"/>
                         </constraints>
                     </view>
@@ -83,14 +110,17 @@
             </constraints>
             <connections>
                 <outlet property="durationLabel" destination="BnJ-Nb-qSf" id="bh5-U8-lpL"/>
+                <outlet property="playerContainerView" destination="Sfj-Bh-6zH" id="XV7-J2-FnX"/>
+                <outlet property="selectUnSelectButton" destination="fjy-8B-mVl" id="iWb-5r-DV7"/>
                 <outlet property="selectionImageView" destination="1uN-2C-Hex" id="0L8-vS-k8e"/>
                 <outlet property="thumbNailImageView" destination="t4U-7e-nMF" id="M0c-SJ-adp"/>
+                <outlet property="volumeButton" destination="7C6-tI-ymc" id="3e7-nA-2Np"/>
                 <outlet property="volumeImageView" destination="zuF-If-LjS" id="Wyd-Ic-agu"/>
             </connections>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="Pause" width="9" height="14"/>
         <image name="SectionHeaderChoose" width="26" height="26"/>
+        <image name="sound-pause" width="9" height="14"/>
     </resources>
 </document>
