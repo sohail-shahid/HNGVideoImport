@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -19,30 +21,54 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t4U-7e-nMF">
                                 <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="SectionHeaderChoose" translatesAutoresizingMaskIntoConstraints="NO" id="1uN-2C-Hex">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SectionHeaderChoose" translatesAutoresizingMaskIntoConstraints="NO" id="1uN-2C-Hex">
                                 <rect key="frame" x="146" y="8" width="26" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1uN-2C-Hex" secondAttribute="height" multiplier="1:1" id="OoG-un-UB8"/>
+                                </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bof-3j-6Mk">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bof-3j-6Mk">
                                 <rect key="frame" x="0.0" y="95" width="180" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1:28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BnJ-Nb-qSf">
-                                        <rect key="frame" x="130" y="9" width="42" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:28" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="BnJ-Nb-qSf">
+                                        <rect key="frame" x="111" y="0.0" width="61" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="61" id="vgu-3t-4F2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Pause" translatesAutoresizingMaskIntoConstraints="NO" id="zuF-If-LjS">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pause" translatesAutoresizingMaskIntoConstraints="NO" id="zuF-If-LjS">
                                         <rect key="frame" x="8" y="6" width="18" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="zuF-If-LjS" secondAttribute="height" multiplier="9:14" id="rDD-kz-Qq0"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="BnJ-Nb-qSf" firstAttribute="top" secondItem="Bof-3j-6Mk" secondAttribute="top" id="1HX-na-ENz"/>
+                                    <constraint firstItem="zuF-If-LjS" firstAttribute="height" secondItem="Bof-3j-6Mk" secondAttribute="height" multiplier="0.7" id="2ZR-6w-6lI"/>
+                                    <constraint firstAttribute="bottom" secondItem="zuF-If-LjS" secondAttribute="bottom" constant="6" id="4va-4S-nIM"/>
+                                    <constraint firstItem="zuF-If-LjS" firstAttribute="leading" secondItem="Bof-3j-6Mk" secondAttribute="leading" constant="8" id="JKq-qQ-rBU"/>
+                                    <constraint firstAttribute="bottom" secondItem="BnJ-Nb-qSf" secondAttribute="bottom" id="tHi-cs-1gx"/>
+                                    <constraint firstAttribute="trailing" secondItem="BnJ-Nb-qSf" secondAttribute="trailing" constant="8" id="vgg-Q9-9e0"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="t4U-7e-nMF" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="9A8-is-j9V"/>
+                            <constraint firstItem="Bof-3j-6Mk" firstAttribute="height" secondItem="fPh-aW-s1M" secondAttribute="height" multiplier="0.296" id="9xn-1X-phX"/>
+                            <constraint firstAttribute="trailing" secondItem="1uN-2C-Hex" secondAttribute="trailing" constant="8" id="FHR-bh-Xyb"/>
                             <constraint firstAttribute="trailing" secondItem="t4U-7e-nMF" secondAttribute="trailing" id="KK7-xP-Qel"/>
+                            <constraint firstItem="1uN-2C-Hex" firstAttribute="height" secondItem="fPh-aW-s1M" secondAttribute="height" multiplier="0.192" id="TaQ-Ai-Phd"/>
                             <constraint firstItem="t4U-7e-nMF" firstAttribute="top" secondItem="fPh-aW-s1M" secondAttribute="top" id="UAP-eT-YV3"/>
+                            <constraint firstAttribute="trailing" secondItem="Bof-3j-6Mk" secondAttribute="trailing" id="iwq-fY-LyA"/>
+                            <constraint firstItem="1uN-2C-Hex" firstAttribute="top" secondItem="fPh-aW-s1M" secondAttribute="top" constant="8" id="onU-zb-Sxi"/>
+                            <constraint firstItem="Bof-3j-6Mk" firstAttribute="leading" secondItem="fPh-aW-s1M" secondAttribute="leading" id="pAr-Bg-pTc"/>
+                            <constraint firstAttribute="bottom" secondItem="Bof-3j-6Mk" secondAttribute="bottom" id="pZU-Px-vVQ"/>
                             <constraint firstAttribute="bottom" secondItem="t4U-7e-nMF" secondAttribute="bottom" id="xxl-Rr-Cx5"/>
                         </constraints>
                     </view>
@@ -55,6 +81,12 @@
                 <constraint firstItem="fPh-aW-s1M" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Inl-fW-ZXi"/>
                 <constraint firstAttribute="bottom" secondItem="fPh-aW-s1M" secondAttribute="bottom" id="bEd-Nd-jha"/>
             </constraints>
+            <connections>
+                <outlet property="durationLabel" destination="BnJ-Nb-qSf" id="bh5-U8-lpL"/>
+                <outlet property="selectionImageView" destination="1uN-2C-Hex" id="0L8-vS-k8e"/>
+                <outlet property="thumbNailImageView" destination="t4U-7e-nMF" id="M0c-SJ-adp"/>
+                <outlet property="volumeImageView" destination="zuF-If-LjS" id="Wyd-Ic-agu"/>
+            </connections>
         </collectionViewCell>
     </objects>
     <resources>

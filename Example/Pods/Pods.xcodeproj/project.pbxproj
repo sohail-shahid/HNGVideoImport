@@ -17,6 +17,8 @@
 		593F722A1C4F63AB00B125BC /* HNGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F72291C4F63AB00B125BC /* HNGConstants.swift */; };
 		593F722D1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F722B1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.swift */; };
 		593F722E1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 593F722C1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.xib */; };
+		593F72301C4FB5DB00B125BC /* HNGHelperUtill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F722F1C4FB5DB00B125BC /* HNGHelperUtill.swift */; };
+		593F72321C4FBA2B00B125BC /* HNGImageCachingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593F72311C4FBA2B00B125BC /* HNGImageCachingManager.swift */; };
 		59F47E2F1C4E6F9900C33A69 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 59F47E2B1C4E6F9900C33A69 /* .gitkeep */; };
 		59F47E341C4E717300C33A69 /* ImageResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59F47E331C4E717300C33A69 /* ImageResources.xcassets */; };
 		59F47E371C4E7F4C00C33A69 /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F47E351C4E7F4C00C33A69 /* VideoCollectionViewCell.swift */; };
@@ -75,6 +77,8 @@
 		593F72291C4F63AB00B125BC /* HNGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HNGConstants.swift; sourceTree = "<group>"; };
 		593F722B1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HNGHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		593F722C1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HNGHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
+		593F722F1C4FB5DB00B125BC /* HNGHelperUtill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HNGHelperUtill.swift; sourceTree = "<group>"; };
+		593F72311C4FBA2B00B125BC /* HNGImageCachingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HNGImageCachingManager.swift; sourceTree = "<group>"; };
 		59F47E2B1C4E6F9900C33A69 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		59F47E331C4E717300C33A69 /* ImageResources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ImageResources.xcassets; sourceTree = "<group>"; };
 		59F47E351C4E7F4C00C33A69 /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -162,6 +166,8 @@
 				593F72291C4F63AB00B125BC /* HNGConstants.swift */,
 				593F722B1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.swift */,
 				593F722C1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.xib */,
+				593F722F1C4FB5DB00B125BC /* HNGHelperUtill.swift */,
+				593F72311C4FBA2B00B125BC /* HNGImageCachingManager.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -458,9 +464,11 @@
 				58481E324EF6073EDE7B417441C121A3 /* HNGVideoImport-dummy.m in Sources */,
 				593F722A1C4F63AB00B125BC /* HNGConstants.swift in Sources */,
 				593F722D1C4F9C1400B125BC /* HNGHeaderCollectionReusableView.swift in Sources */,
+				593F72301C4FB5DB00B125BC /* HNGHelperUtill.swift in Sources */,
 				5934CA731C4E499E00E761E5 /* HNGVideoImportViewController.swift in Sources */,
 				59F47E371C4E7F4C00C33A69 /* VideoCollectionViewCell.swift in Sources */,
 				7B6660CBB1210085F04CD218695E21F1 /* ReplaceMe.swift in Sources */,
+				593F72321C4FBA2B00B125BC /* HNGImageCachingManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

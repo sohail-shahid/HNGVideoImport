@@ -27,16 +27,14 @@ public class HNGVideoImportViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        
+        videoCollectionView.backgroundColor = UIColor.whiteColor()
         let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
         let nib = UINib(nibName:"VideoCollectionViewCell", bundle:currentBundle)
         videoCollectionView.registerNib(nib, forCellWithReuseIdentifier:HNGConstants.VedioCellIndentifer)
         let supplementaryViewNib = UINib(nibName:"HNGHeaderCollectionReusableView", bundle: currentBundle)
         videoCollectionView.registerNib(supplementaryViewNib, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: HNGConstants.VedioSupplementaryViewIndentifer)
-        /*videoCollectionView.registerClass(object_getClass(HNGHeaderCollectionReusableView()),
-            forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-            withReuseIdentifier: "HNGHeaderCollectionReusableView")*/
-
-        videoCollectionViewLayout.headerReferenceSize = CGSizeMake(videoCollectionView.frame.size.width,40);
+        videoCollectionViewLayout.headerReferenceSize = CGSizeMake(videoCollectionView.frame.size.width,40)
 
         loadViewAssetsFromGallery()
         
@@ -98,7 +96,7 @@ public class HNGVideoImportViewController: UIViewController {
             stop: UnsafeMutablePointer<ObjCBool>) in
             if object is PHAsset{
                 let asset = object as! PHAsset
-                let createDateString = self.getFromatedStringFromDate(asset.creationDate == nil ? NSDate() : asset.creationDate!)
+                let createDateString = HNGHelperUtill.getFromatedStringFromDate(asset.creationDate == nil ? NSDate() : asset.creationDate!)
                 if  let _ = groupDic[createDateString]{
                     var array  = groupDic[createDateString]! as [PHAsset]
                     array.append(asset)
@@ -115,14 +113,7 @@ public class HNGVideoImportViewController: UIViewController {
 
         return groupDic
     }
-    private func getFromatedStringFromDate(date:NSDate)-> String{
-    
-        
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy - EEEE"
-        let dateString = dateFormatter.stringFromDate(date)
-        return dateString
-    }
+
     
 
     // MARK: - Public Methods
@@ -153,8 +144,11 @@ public class HNGVideoImportViewController: UIViewController {
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(HNGConstants.VedioCellIndentifer, forIndexPath: indexPath) as! VideoCollectionViewCell
-        cell.backgroundColor = UIColor.whiteColor()
         // Configure the cell
+        let sectionTitle : String = videoSectionTitles[indexPath.section]
+        let videoOfCurrentSection : Array = galleryVideosDic[sectionTitle]!
+        let videoAsset : PHAsset = videoOfCurrentSection[indexPath.item]
+        cell.setVideoData(videoAsset)
         return cell
     }
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -170,8 +164,20 @@ public class HNGVideoImportViewController: UIViewController {
         }
 
     }
-
     
+    func collectionView(collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
+    
+
+            let width = HNGHelperUtill.scaledWidthWRTDesign(subviewWidth:HNGConstants.cellWidth)
+            let height = width * HNGConstants.cellHeightWidthRatio
+            return CGSizeMake(width, height)
+            
+    }
+    
+    // MARK: - destructor
+
     /*
     // MARK: - Navigation
 
