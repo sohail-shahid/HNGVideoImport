@@ -44,14 +44,16 @@ class VideoCollectionViewCell: UICollectionViewCell {
     
     @IBAction func volumeButtonPressed(sender : AnyObject) {
         
-        self.videoPlayer?.muted = false
-        self.videoPlayer?.volume = 1.0
+       // self.videoPlayer?.volume = 1.0
         volumeButton.selected = !volumeButton.selected
         let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
         if volumeButton.selected == true {
+            self.videoPlayer?.muted = false
             volumeImageView.image = UIImage(named:"sound-playing",inBundle: currentBundle,compatibleWithTraitCollection:nil)
         }else{
             volumeImageView.image = UIImage(named:"sound-pause",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            self.videoPlayer?.muted = true
+
         }
 
     }
