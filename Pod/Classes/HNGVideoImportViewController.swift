@@ -35,7 +35,7 @@ public class HNGVideoImportViewController: UIViewController {
         let supplementaryViewNib = UINib(nibName:"HNGHeaderCollectionReusableView", bundle: currentBundle)
         videoCollectionView.registerNib(supplementaryViewNib, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: HNGConstants.VedioSupplementaryViewIndentifer)
         videoCollectionViewLayout.headerReferenceSize = CGSizeMake(videoCollectionView.frame.size.width,40)
-
+        setAudioOutPutPort()
         loadViewAssetsFromGallery()
         
     }
@@ -70,6 +70,19 @@ public class HNGVideoImportViewController: UIViewController {
     
     
     // MARK: - Private Mehtods
+    
+    private func setAudioOutPutPort(){ // There is no sound on speaker. iOS Bug.  TO Fix this issue We set audio port
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try session.overrideOutputAudioPort(AVAudioSessionPortOverride.None)
+            try session.setActive(true)
+            
+        }catch {
+            
+        }
+    
+    }
     private func loadViewAssetsFromGallery(){
 
         
