@@ -103,7 +103,6 @@ public class HNGVideoImportViewController: UIViewController {
     
         
         var groupDic : Dictionary<String,Array<PHAsset>> = Dictionary()
-        
         videoList.enumerateObjectsUsingBlock{(object: AnyObject!,
             count: Int,
             stop: UnsafeMutablePointer<ObjCBool>) in
@@ -120,7 +119,6 @@ public class HNGVideoImportViewController: UIViewController {
                     groupDic[createDateString] = videoArray
                     self.videoSectionTitles.append(createDateString)
                 }
-                
             }
         }
 
@@ -183,9 +181,7 @@ public class HNGVideoImportViewController: UIViewController {
     func collectionView(collectionView: UICollectionView,willDisplayCell cell:UICollectionViewCell,forItemAtIndexPath indexPath: NSIndexPath){
         
         if let dowCastCell = cell as? VideoCollectionViewCell {
-            
-            dowCastCell.playVideo()
-            
+            dowCastCell.onCellWillAppearing()
         }
     }
     
@@ -193,9 +189,7 @@ public class HNGVideoImportViewController: UIViewController {
     func collectionView(collectionView: UICollectionView,didEndDisplayingCell cell: UICollectionViewCell,forItemAtIndexPath indexPath: NSIndexPath){
     
         if let dowCastCell = cell as? VideoCollectionViewCell {
-            
-            dowCastCell.puseVideo()
-            
+            dowCastCell.onCellWillDisAppearing()
         }
     }
     

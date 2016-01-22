@@ -28,6 +28,7 @@ class VideoCollectionViewCell: UICollectionViewCell {
     
     var videoPlayer : AVPlayer?
     var avPlayerLayer : AVPlayerLayer?
+    var currentRequestID : PHImageRequestID?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -77,8 +78,8 @@ class VideoCollectionViewCell: UICollectionViewCell {
         durationLabel.text = HNGHelperUtill.stringFromTimeInterval(videoAsset.duration)
         self.representedAssetIdentifier = videoAsset.localIdentifier;
 
-        /*let chache = HNGImageCachingManager.chache
-        // Request an image for the asset from the PHCachingImageManager.
+        let chache = HNGImageCachingManager.chache
+        /*// Request an image for the asset from the PHCachingImageManager.
         chache.requestImageForAsset(videoAsset, targetSize: self.thumbNailImageView.bounds.size, contentMode:PHImageContentMode.AspectFill, options:nil, resultHandler:{(result:UIImage?,info:Dictionary<NSObject,AnyObject>?)-> Void in
             
             if (self.representedAssetIdentifier == videoAsset.localIdentifier) {
@@ -87,37 +88,36 @@ class VideoCollectionViewCell: UICollectionViewCell {
                 self.thumbNailImageView.clipsToBounds = true
             }
             })*/
-        PHImageManager.defaultManager().requestAVAssetForVideo(videoAsset, options:nil, resultHandler:{(avAsset:AVAsset?,audioMix:AVAudioMix?,info:Dictionary<NSObject,AnyObject>?)->Void in
-            if let asset = avAsset {
-                
-                if (self.representedAssetIdentifier == videoAsset.localIdentifier) {
-
-                    let playerItem : AVPlayerItem = AVPlayerItem(asset:asset)
-                    if self.videoPlayer == nil {
-                        
-                        self.videoPlayer = AVPlayer(playerItem:playerItem)
-                        self.avPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
-                        self.avPlayerLayer?.frame = self.playerContainerView.bounds
-                        self.playerContainerView.layer.addSublayer(self.avPlayerLayer!)
-                        self.avPlayerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill;
-                        self.playerContainerView.layer.cornerRadius = 7.0
-                        self.playerContainerView.clipsToBounds = true
-                        self.setNeedsDisplay()
-                    
-                    }else{
-                        self.videoPlayer?.replaceCurrentItemWithPlayerItem(playerItem)
-                    }
-                    self.videoPlayer?.muted = true
-                    //self.videoPlayer?.volume = asset.preferredVolume
-                    print(asset.preferredVolume)
-                    print(self.videoPlayer?.volume)
-
-                    self.videoPlayer?.play()
+        
+        if let asset = chache.fetchedAssetsCache?[videoAsset.localIdentifier] {
+            self.setMediaPlayer(asset)
+        }else{
+            
+            /*chache.requestPlayerItemForVideo(videoAsset, options:nil, resultHandler:{(avPlayerItem:AVPlayerItem?, info:[NSObject : AnyObject]?) -> Void in
+                if let asset = avPlayerItem {
+                    chache.fetchedAssetsCache?[videoAsset.localIdentifier] = asset
+                    self.setMediaPlayer(asset)
                 }
-            }
-        })
+            })*/
+            
+            
+            chache.requestAVAssetForVideo(videoAsset, options:nil, resultHandler:{(avAsset:AVAsset?,audioMix:AVAudioMix?,info:Dictionary<NSObject,AnyObject>?)->Void in
+                if let asset = avAsset {
+                    chache.fetchedAssetsCache?[videoAsset.localIdentifier] = asset
+                    self.setMediaPlayer(asset)
+                }
+            })
+        }
+
         
 
+    }
+    func onCellWillAppearing(){
+        playVideo()
+
+    }
+    func onCellWillDisAppearing(){
+        puseVideo()
     }
     func playVideo(){
         videoPlayer?.play()
@@ -125,11 +125,38 @@ class VideoCollectionViewCell: UICollectionViewCell {
     }
     func puseVideo(){
         videoPlayer?.pause()
+        if let currReqID = currentRequestID{
+            HNGImageCachingManager.chache.cancelImageRequest(currReqID)
+
+        }
+    }
+    private func setMediaPlayer(asset:AVAsset){
+        
+        //if (self.representedAssetIdentifier == videoAsset.localIdentifier) {
+            
+            let playerItem : AVPlayerItem = AVPlayerItem(asset:asset)
+            if self.videoPlayer == nil {
+                
+                self.videoPlayer = AVPlayer(playerItem:playerItem)
+                self.avPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
+                self.avPlayerLayer?.frame = self.playerContainerView.bounds
+                self.playerContainerView.layer.addSublayer(self.avPlayerLayer!)
+                self.avPlayerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill;
+                self.playerContainerView.layer.cornerRadius = 7.0
+                self.playerContainerView.clipsToBounds = true
+                self.setNeedsDisplay()
+                
+            }else{
+                self.videoPlayer?.replaceCurrentItemWithPlayerItem(playerItem)
+            }
+            self.videoPlayer?.muted = true
+            self.videoPlayer?.play()
+        //}
 
     }
-    
     deinit{
         videoPlayer?.pause()
         videoPlayer = nil
     }
+
 }

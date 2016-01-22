@@ -12,6 +12,8 @@ class HNGImageCachingManager: PHCachingImageManager {
     
     
     //var chache : PHCachingImageManager = PHCachingImageManager()
+    
+    var fetchedAssetsCache : Dictionary <String,AVAsset>? = Dictionary()
     class var chache : HNGImageCachingManager {
         struct Static {
             static var onceToken : dispatch_once_t = 0
@@ -28,13 +30,21 @@ class HNGImageCachingManager: PHCachingImageManager {
         
     }
     deinit {
-    
+        fetchedAssetsCache?.removeAll()
+        fetchedAssetsCache = nil
     }
     
+    
+    //MARK:- Asset Caching
     
     func resetCachedAssets(){
         self.stopCachingImagesForAllAssets()
     }
+    
+    func updateCachedAssets(assets : [PHAsset],targetSize : CGSize) {
+        self.startCachingImagesForAssets(assets, targetSize:targetSize, contentMode: PHImageContentMode.AspectFill, options: nil)
+    }
+
 
 
 }
