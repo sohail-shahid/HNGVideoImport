@@ -26,9 +26,15 @@ class VideoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var volumeButton : UIButton!
     
     
+    
+    
+    
+    private var onPlayButtonHandler:(nowPlaying:AVPlayer?, currentAsset: PHAsset?)->Void = {(nowPlaying:AVPlayer?,currentAsset: PHAsset?) -> Void in}
+
+    
     var videoPlayer : AVPlayer?
     var avPlayerLayer : AVPlayerLayer?
-    var currentRequestID : PHImageRequestID?
+    var currentAsset : PHAsset?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -49,12 +55,13 @@ class VideoCollectionViewCell: UICollectionViewCell {
         volumeButton.selected = !volumeButton.selected
         let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
         if volumeButton.selected == true {
-            self.videoPlayer?.muted = false
             volumeImageView.image = UIImage(named:"sound-playing",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            if let currAsset = currentAsset{
+                self.requestForVideo(currAsset)
+            }
         }else{
             volumeImageView.image = UIImage(named:"sound-pause",inBundle: currentBundle,compatibleWithTraitCollection:nil)
-            self.videoPlayer?.muted = true
-
+            self.videoPlayer?.pause()
         }
 
     }
@@ -72,52 +79,57 @@ class VideoCollectionViewCell: UICollectionViewCell {
     
     // MARK:-  Public Methods
     
-    
-    func setVideoData(videoAsset : PHAsset){
+    func onPausePlayPressedHandeler(handler:(nowPlaying:AVPlayer?,currentAsset: PHAsset?)->Void){
+        onPlayButtonHandler = handler
+    }
+    func setVideoData(videoAsset : PHAsset,shouldPlayVideo:Bool){
         
+        
+        currentAsset = videoAsset
         durationLabel.text = HNGHelperUtill.stringFromTimeInterval(videoAsset.duration)
         self.representedAssetIdentifier = videoAsset.localIdentifier;
+        let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
 
-        let chache = HNGImageCachingManager.chache
-        /*// Request an image for the asset from the PHCachingImageManager.
-        chache.requestImageForAsset(videoAsset, targetSize: self.thumbNailImageView.bounds.size, contentMode:PHImageContentMode.AspectFill, options:nil, resultHandler:{(result:UIImage?,info:Dictionary<NSObject,AnyObject>?)-> Void in
+        if shouldPlayVideo{
+            volumeButton.selected = true
+            volumeImageView.image = UIImage(named:"sound-playing",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            self.requestForVideo(videoAsset)
             
-            if (self.representedAssetIdentifier == videoAsset.localIdentifier) {
-                self.thumbNailImageView.image = result;
-                self.thumbNailImageView.layer.cornerRadius = 7.0
-                self.thumbNailImageView.clipsToBounds = true
-            }
-            })*/
-        
-        if let asset = chache.fetchedAssetsCache?[videoAsset.localIdentifier] {
-            self.setMediaPlayer(asset)
         }else{
             
-            /*chache.requestPlayerItemForVideo(videoAsset, options:nil, resultHandler:{(avPlayerItem:AVPlayerItem?, info:[NSObject : AnyObject]?) -> Void in
-                if let asset = avPlayerItem {
-                    chache.fetchedAssetsCache?[videoAsset.localIdentifier] = asset
-                    self.setMediaPlayer(asset)
-                }
-            })*/
             
-            
-            chache.requestAVAssetForVideo(videoAsset, options:nil, resultHandler:{(avAsset:AVAsset?,audioMix:AVAudioMix?,info:Dictionary<NSObject,AnyObject>?)->Void in
-                if let asset = avAsset {
-                    chache.fetchedAssetsCache?[videoAsset.localIdentifier] = asset
-                    self.setMediaPlayer(asset)
+            volumeButton.selected = false
+            volumeImageView.image = UIImage(named:"sound-pause",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            self.avPlayerLayer?.hidden = true
+
+
+            let chache = HNGImageCachingManager.chache
+            // Request an image for the asset from the PHCachingImageManager.
+            chache.requestImageForAsset(videoAsset, targetSize: self.thumbNailImageView.bounds.size, contentMode:PHImageContentMode.AspectFill, options:nil, resultHandler:{(result:UIImage?,info:Dictionary<NSObject,AnyObject>?)-> Void in
+                
+                if (self.representedAssetIdentifier == videoAsset.localIdentifier) {
+                    self.thumbNailImageView.image = result;
+                    self.thumbNailImageView.layer.cornerRadius = 7.0
+                    self.thumbNailImageView.clipsToBounds = true
                 }
             })
         }
 
+    
         
 
     }
-    func onCellWillAppearing(){
-        playVideo()
+    func onCellWillAppearing(shouldPlayVideo : Bool){
+        /*if (shouldPlayVideo){
+            playVideo()
+            avPlayerLayer?.hidden = false
+        }*/
 
     }
     func onCellWillDisAppearing(){
-        puseVideo()
+        videoPlayer?.pause()
+        avPlayerLayer?.hidden = true
+    
     }
     func playVideo(){
         videoPlayer?.play()
@@ -125,34 +137,68 @@ class VideoCollectionViewCell: UICollectionViewCell {
     }
     func puseVideo(){
         videoPlayer?.pause()
-        if let currReqID = currentRequestID{
-            HNGImageCachingManager.chache.cancelImageRequest(currReqID)
+    }
+    
+    private func requestForVideo(videoAsset:PHAsset){
+        let cache = HNGImageCachingManager.chache
+        if let asset = cache.fetchedAssetsCache?[videoAsset.localIdentifier] {
+            self.performSelectorOnMainThread(Selector("setMediaPlayer:"), withObject: asset, waitUntilDone: true)
 
+        }else{
+        
+            cache.requestAVAssetForVideo(videoAsset, options:nil, resultHandler:{(avAsset:AVAsset?,audioMix:AVAudioMix?,info:Dictionary<NSObject,AnyObject>?)->Void in
+                if let asset = avAsset {
+            
+                    cache.fetchedAssetsCache?[videoAsset.localIdentifier] = asset
+                    self.performSelectorOnMainThread(Selector("setMediaPlayer:"), withObject: asset, waitUntilDone: true)
+           
+                }
+        
+        
+            })
+        
         }
     }
-    private func setMediaPlayer(asset:AVAsset){
+    func setMediaPlayer(asset:AVAsset){
         
-        //if (self.representedAssetIdentifier == videoAsset.localIdentifier) {
-            
+        
             let playerItem : AVPlayerItem = AVPlayerItem(asset:asset)
             if self.videoPlayer == nil {
                 
                 self.videoPlayer = AVPlayer(playerItem:playerItem)
+                self.videoPlayer?.actionAtItemEnd = AVPlayerActionAtItemEnd.Pause
                 self.avPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
                 self.avPlayerLayer?.frame = self.playerContainerView.bounds
                 self.playerContainerView.layer.addSublayer(self.avPlayerLayer!)
                 self.avPlayerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill;
                 self.playerContainerView.layer.cornerRadius = 7.0
                 self.playerContainerView.clipsToBounds = true
-                self.setNeedsDisplay()
+                let currentContext = UnsafeMutablePointer<()>()
+                self.videoPlayer?.addObserver(self, forKeyPath:"rate", options:NSKeyValueObservingOptions.New, context:currentContext)
+            
                 
             }else{
                 self.videoPlayer?.replaceCurrentItemWithPlayerItem(playerItem)
+                self.avPlayerLayer?.hidden = false
             }
-            self.videoPlayer?.muted = true
+            self.onPlayButtonHandler(nowPlaying: self.videoPlayer,currentAsset:self.currentAsset)
             self.videoPlayer?.play()
-        //}
+        
 
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        
+        
+        print(self.representedAssetIdentifier)
+        if (videoPlayer!.rate == 0.0) {
+            let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
+            volumeButton.selected = false
+            volumeImageView.image = UIImage(named:"sound-pause",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+ 
+        }
+
+    
     }
     deinit{
         videoPlayer?.pause()

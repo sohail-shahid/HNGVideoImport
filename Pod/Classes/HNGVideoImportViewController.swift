@@ -21,6 +21,9 @@ public class HNGVideoImportViewController: UIViewController {
     @IBOutlet weak var videoCollectionView: UICollectionView!
     @IBOutlet weak var videoCollectionViewLayout: UICollectionViewFlowLayout!
     
+    
+    var currentPlayer : AVPlayer?
+    var currentPlayingAsset : PHAsset?
     // MARK: - View Life Cycle
 
     override public func viewDidLoad() {
@@ -71,6 +74,7 @@ public class HNGVideoImportViewController: UIViewController {
     
     // MARK: - Private Mehtods
     
+    
     private func setAudioOutPutPort(){ // There is no sound on speaker. iOS Bug.  TO Fix this issue We set audio port
         let session = AVAudioSession.sharedInstance()
         do {
@@ -101,7 +105,7 @@ public class HNGVideoImportViewController: UIViewController {
     }
     private func groupByVideos(videoList : PHFetchResult)-> Dictionary<String,Array<PHAsset>>{
     
-        
+        var array : Array<PHAsset> = []
         var groupDic : Dictionary<String,Array<PHAsset>> = Dictionary()
         videoList.enumerateObjectsUsingBlock{(object: AnyObject!,
             count: Int,
@@ -119,8 +123,10 @@ public class HNGVideoImportViewController: UIViewController {
                     groupDic[createDateString] = videoArray
                     self.videoSectionTitles.append(createDateString)
                 }
+                array.append(asset)
             }
         }
+        HNGImageCachingManager.chache.startCachingImagesForAssets(array, targetSize: CGSizeMake(180, 135), contentMode:PHImageContentMode.AspectFill, options:nil)
 
         return groupDic
     }
@@ -129,6 +135,11 @@ public class HNGVideoImportViewController: UIViewController {
 
     // MARK: - Public Methods
     
+    
+    func stopCurrentPlayer(newPlayer:AVPlayer){
+        currentPlayer?.pause()
+        currentPlayer = newPlayer
+    }
     // These Methods are exposed to other apps
     
     class public  func showVideoImportViewController(controller:UIViewController){
@@ -159,7 +170,19 @@ public class HNGVideoImportViewController: UIViewController {
         let sectionTitle : String = videoSectionTitles[indexPath.section]
         let videoOfCurrentSection : Array = galleryVideosDic[sectionTitle]!
         let videoAsset : PHAsset = videoOfCurrentSection[indexPath.item]
-        cell.setVideoData(videoAsset)
+        
+        if currentPlayingAsset?.localIdentifier == videoAsset.localIdentifier {
+            cell.setVideoData(videoAsset,shouldPlayVideo:true)
+        }else{
+            cell.setVideoData(videoAsset,shouldPlayVideo:false)
+        }
+        
+        cell.onPausePlayPressedHandeler({(nowPlaying:AVPlayer?,currentAsset: PHAsset?)-> Void in
+            
+            self.performSelectorOnMainThread(Selector("stopCurrentPlayer:"), withObject:nowPlaying, waitUntilDone:true)
+            self.currentPlayingAsset = currentAsset
+        })
+
         return cell
     }
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -180,16 +203,25 @@ public class HNGVideoImportViewController: UIViewController {
 
     func collectionView(collectionView: UICollectionView,willDisplayCell cell:UICollectionViewCell,forItemAtIndexPath indexPath: NSIndexPath){
         
-        if let dowCastCell = cell as? VideoCollectionViewCell {
-            dowCastCell.onCellWillAppearing()
-        }
+//        if let dowCastCell = cell as? VideoCollectionViewCell {
+//            dowCastCell.onCellWillAppearing(shouldPlay)
+//
+//        }
     }
     
     
     func collectionView(collectionView: UICollectionView,didEndDisplayingCell cell: UICollectionViewCell,forItemAtIndexPath indexPath: NSIndexPath){
     
         if let dowCastCell = cell as? VideoCollectionViewCell {
-            dowCastCell.onCellWillDisAppearing()
+            
+            let sectionTitle : String = videoSectionTitles[indexPath.section]
+            let videoOfCurrentSection : Array = galleryVideosDic[sectionTitle]!
+            let videoAsset : PHAsset = videoOfCurrentSection[indexPath.item]
+            
+            if currentPlayingAsset == videoAsset {
+                dowCastCell.onCellWillDisAppearing()
+            
+            }
         }
     }
     
