@@ -29,6 +29,7 @@ class VideoCollectionViewCell: UICollectionViewCell {
     
     
     
+    private var onSharedItemHandler:(currentAsset: PHAsset?,shouldAdd:Bool)->Void = {(currentAsset: PHAsset?,shouldAdd:Bool)->Void in}
     private var onPlayButtonHandler:(nowPlaying:AVPlayer?, currentAsset: PHAsset?)->Void = {(nowPlaying:AVPlayer?,currentAsset: PHAsset?) -> Void in}
 
     
@@ -74,15 +75,22 @@ class VideoCollectionViewCell: UICollectionViewCell {
 
             selectionImageView.image = UIImage(named:"SectionHeaderChoose",inBundle: currentBundle,compatibleWithTraitCollection:nil)
         }
+        onSharedItemHandler(currentAsset: currentAsset,shouldAdd: selectUnSelectButton.selected)// if selected is = true then we shall add otherwise remove 
+
     }
     
     
-    // MARK:-  Public Methods
+    // MARK:-  Block Methods
     
     func onPausePlayPressedHandeler(handler:(nowPlaying:AVPlayer?,currentAsset: PHAsset?)->Void){
         onPlayButtonHandler = handler
     }
-    func setVideoData(videoAsset : PHAsset,shouldPlayVideo:Bool){
+    func onShareUnSharePressedHandeler(handler:(currentAsset: PHAsset?,shouldAdd:Bool)->Void){
+        onSharedItemHandler = handler
+    }
+    // MARK:-  Public Methods
+
+    func setVideoData(videoAsset : PHAsset,shouldPlayVideo:Bool,isSelected:Bool){
         
         
         currentAsset = videoAsset
@@ -90,6 +98,14 @@ class VideoCollectionViewCell: UICollectionViewCell {
         self.representedAssetIdentifier = videoAsset.localIdentifier;
         let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
 
+        if isSelected {
+            selectUnSelectButton.selected = true
+            selectionImageView.image = UIImage(named:"SectionHeaderChooseHighlight",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+
+        }else{
+            selectUnSelectButton.selected = false
+            selectionImageView.image = UIImage(named:"SectionHeaderChoose",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+        }
         if shouldPlayVideo{
             volumeButton.selected = true
             volumeImageView.image = UIImage(named:"sound-playing",inBundle: currentBundle,compatibleWithTraitCollection:nil)
@@ -114,6 +130,7 @@ class VideoCollectionViewCell: UICollectionViewCell {
                 }
             })
         }
+        
 
     
         

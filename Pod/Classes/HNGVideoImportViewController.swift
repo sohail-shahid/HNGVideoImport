@@ -13,7 +13,7 @@ public class HNGVideoImportViewController: UIViewController {
     // MARK: - Private DataMembers
     //private var videoList : Array<String> = ["sohail","khan","hello"]
     private var galleryVideosDic : Dictionary<String,Array<PHAsset>> = Dictionary() // THis dictionary view save videos of gallaryApp, group by dates
-    private var videoSectionTitles : Array<String> =  []
+    private var videoSectionTitles : [String] =  []
     
     
     
@@ -22,8 +22,10 @@ public class HNGVideoImportViewController: UIViewController {
     @IBOutlet weak var videoCollectionViewLayout: UICollectionViewFlowLayout!
     
     
-    var currentPlayer : AVPlayer?
-    var currentPlayingAsset : PHAsset?
+    private var currentPlayer : AVPlayer?
+    private var currentPlayingAsset : PHAsset?
+    private var itemsToBeShared : [PHAsset] = []
+    
     // MARK: - View Life Cycle
 
     override public func viewDidLoad() {
@@ -170,17 +172,29 @@ public class HNGVideoImportViewController: UIViewController {
         let sectionTitle : String = videoSectionTitles[indexPath.section]
         let videoOfCurrentSection : Array = galleryVideosDic[sectionTitle]!
         let videoAsset : PHAsset = videoOfCurrentSection[indexPath.item]
-        
+        var tShouldPlay = false
         if currentPlayingAsset?.localIdentifier == videoAsset.localIdentifier {
-            cell.setVideoData(videoAsset,shouldPlayVideo:true)
-        }else{
-            cell.setVideoData(videoAsset,shouldPlayVideo:false)
+            tShouldPlay = true
         }
+        var tISSelected = false
+        if itemsToBeShared.contains(videoAsset){
+            tISSelected = true
+        }
+        
+        cell.setVideoData(videoAsset,shouldPlayVideo:tShouldPlay,isSelected: tISSelected)
+
         
         cell.onPausePlayPressedHandeler({(nowPlaying:AVPlayer?,currentAsset: PHAsset?)-> Void in
             
             self.performSelectorOnMainThread(Selector("stopCurrentPlayer:"), withObject:nowPlaying, waitUntilDone:true)
             self.currentPlayingAsset = currentAsset
+        })
+        cell.onShareUnSharePressedHandeler({(currentAsset: PHAsset?,shouldAdd:Bool)->Void in
+            if shouldAdd {
+                self.itemsToBeShared.append(currentAsset!)
+            }else{
+                self.itemsToBeShared.removeObject(currentAsset!)
+            }
         })
 
         return cell
