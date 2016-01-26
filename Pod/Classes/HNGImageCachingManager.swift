@@ -30,8 +30,8 @@ class HNGImageCachingManager: PHCachingImageManager {
         
     }
     deinit {
+        self.stopCachingImagesForAllAssets()
         fetchedAssetsCache?.removeAll()
-        fetchedAssetsCache = nil
     }
     
     
@@ -39,6 +39,7 @@ class HNGImageCachingManager: PHCachingImageManager {
     
     func resetCachedAssets(){
         self.stopCachingImagesForAllAssets()
+        fetchedAssetsCache?.removeAll()
     }
     
     func updateCachedAssets(assets : [PHAsset],targetSize : CGSize) {

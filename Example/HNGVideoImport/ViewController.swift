@@ -8,7 +8,8 @@
 
 import UIKit
 import HNGVideoImport
-class ViewController: UIViewController {
+import Photos
+class ViewController: UIViewController , HNGVideoImportViewControllerDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +29,19 @@ class ViewController: UIViewController {
     
     
     @IBAction func showImportViewController(sender: AnyObject) {
-        HNGVideoImportViewController.showVideoImportViewController(self)
+        HNGVideoImportViewController.showVideoImportViewController(self,withDelegate:self)
 
     }
+    //MARK:- HNGVideoImportViewControllerDelegate
+    
+    
+    func videoControllerDidFinishPicking(videoImportController:HNGVideoImportViewController , videoArry:[PHAsset]){
+        print(videoArry.count)
 
+    
+    }
+
+    
+    
 }
 

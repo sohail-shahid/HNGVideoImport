@@ -8,26 +8,36 @@
 
 import UIKit
 import Photos
+
+public protocol HNGVideoImportViewControllerDelegate {
+    func videoControllerDidFinishPicking(videoImportController:HNGVideoImportViewController , videoArry:[PHAsset])
+}
 public class HNGVideoImportViewController: UIViewController {
 
+    var delegate:HNGVideoImportViewControllerDelegate?
+    
     // MARK: - Private DataMembers
+    
+    
     //private var videoList : Array<String> = ["sohail","khan","hello"]
     private var galleryVideosDic : Dictionary<String,Array<PHAsset>> = Dictionary() // THis dictionary view save videos of gallaryApp, group by dates
     private var videoSectionTitles : [String] =  []
     
+    private weak var currentPlayer : AVPlayer?
+    private weak var currentPlayingAsset : PHAsset?
+    private var itemsToBeShared : [PHAsset] = []
+
     
     
-    // MARK: - Private IBOutlets
+    
+    // MARK: -  IBOutlets
     @IBOutlet weak var videoCollectionView: UICollectionView!
     @IBOutlet weak var videoCollectionViewLayout: UICollectionViewFlowLayout!
     
     
-    private var currentPlayer : AVPlayer?
-    private var currentPlayingAsset : PHAsset?
-    private var itemsToBeShared : [PHAsset] = []
     
     // MARK: - View Life Cycle
-
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -63,14 +73,19 @@ public class HNGVideoImportViewController: UIViewController {
     
     
     @IBAction func dismissViewControllerButtonPressed(sender: AnyObject) {
-        
         self.dismissViewControllerAnimated(true, completion: nil)
-        
     }
     
     
     @IBAction func shareButtonPressed(sender: AnyObject) {
+        delegate?.videoControllerDidFinishPicking(self, videoArry: itemsToBeShared)
+        self.dismissViewControllerAnimated(true, completion:{()-> Void in
+
+            
+        })
+
         
+
     }
     
     
@@ -144,8 +159,9 @@ public class HNGVideoImportViewController: UIViewController {
     }
     // These Methods are exposed to other apps
     
-    class public  func showVideoImportViewController(controller:UIViewController){
+    class public  func showVideoImportViewController(controller:UIViewController, withDelegate:HNGVideoImportViewControllerDelegate?){
         let videoImprtVC : HNGVideoImportViewController = HNGVideoImportViewController(nibName:"HNGVideoImportViewController", bundle:NSBundle(forClass: object_getClass(self)))
+        //videoImprtVC.delegate = withDelegate
         controller.presentViewController(videoImprtVC, animated: true, completion: nil)
     }
     
@@ -254,6 +270,11 @@ public class HNGVideoImportViewController: UIViewController {
     }
     
     // MARK: - destructor
+    
+     deinit{
+        print("deinit")
+        HNGImageCachingManager.chache.resetCachedAssets()
+    }
 
     /*
     // MARK: - Navigation
