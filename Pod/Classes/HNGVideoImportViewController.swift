@@ -221,6 +221,19 @@ public class HNGVideoImportViewController: UIViewController {
         
             let supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:HNGConstants.VedioSupplementaryViewIndentifer, forIndexPath: indexPath) as! HNGHeaderCollectionReusableView
             supplementaryView.titleLabel.text = videoSectionTitles[indexPath.section]
+            supplementaryView.onAddRemoveAllItemHandler({(shouldAdd:Bool)->Void in
+                
+                let sectionTitle : String = self.videoSectionTitles[indexPath.section]
+                let videoOfCurrentSection : Array = self.galleryVideosDic[sectionTitle]!
+                if shouldAdd {
+                    self.itemsToBeShared.appendContentsOf(videoOfCurrentSection)
+                }else{
+                    for asset in videoOfCurrentSection {
+                        self.itemsToBeShared.removeObject(asset)
+                    }
+                }
+                self.videoCollectionView.reloadData()
+            })
             return supplementaryView
         
         }else{

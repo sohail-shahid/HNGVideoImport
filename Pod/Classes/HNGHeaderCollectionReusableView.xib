@@ -12,22 +12,39 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jan 1, 2016 - Friday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PyU-cT-Tie">
-                    <rect key="frame" x="10" y="5" width="716" height="30"/>
+                    <rect key="frame" x="10" y="5" width="676" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S5m-7L-qm4">
+                    <rect key="frame" x="700" y="7" width="26" height="26"/>
+                    <state key="normal" image="header-no-selected"/>
+                    <state key="selected" image="thumbnail-selected"/>
+                    <connections>
+                        <action selector="selectUnSelectButtonPressed:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="fDd-vw-Bw8"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="S5m-7L-qm4" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="7" id="6hl-XA-I7k"/>
+                <constraint firstAttribute="trailing" secondItem="S5m-7L-qm4" secondAttribute="trailing" constant="10" id="GCh-Vt-OVh"/>
                 <constraint firstItem="PyU-cT-Tie" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="HW5-8k-H50"/>
-                <constraint firstAttribute="trailing" secondItem="PyU-cT-Tie" secondAttribute="trailing" constant="10" id="aVY-Rq-NY5"/>
+                <constraint firstItem="S5m-7L-qm4" firstAttribute="leading" secondItem="PyU-cT-Tie" secondAttribute="trailing" constant="14" id="KFR-1O-ihb"/>
+                <constraint firstAttribute="bottom" secondItem="S5m-7L-qm4" secondAttribute="bottom" constant="7" id="UtE-5v-LaP"/>
+                <constraint firstAttribute="trailing" secondItem="PyU-cT-Tie" secondAttribute="trailing" constant="50" id="aVY-Rq-NY5"/>
                 <constraint firstAttribute="bottom" secondItem="PyU-cT-Tie" secondAttribute="bottom" constant="5" id="bFU-ts-9dP"/>
                 <constraint firstItem="PyU-cT-Tie" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="5" id="bLB-9Q-BPa"/>
             </constraints>
             <connections>
+                <outlet property="selectUnSelectButton" destination="S5m-7L-qm4" id="r07-Np-KcK"/>
                 <outlet property="titleLabel" destination="PyU-cT-Tie" id="8cf-RY-OE2"/>
             </connections>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="header-no-selected" width="26" height="26"/>
+        <image name="thumbnail-selected" width="26" height="26"/>
+    </resources>
 </document>

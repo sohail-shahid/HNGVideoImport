@@ -24,7 +24,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfj-Bh-6zH">
                                 <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SectionHeaderChoose" translatesAutoresizingMaskIntoConstraints="NO" id="1uN-2C-Hex">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thumbnail-no-selected" translatesAutoresizingMaskIntoConstraints="NO" id="1uN-2C-Hex">
                                 <rect key="frame" x="146" y="8" width="26" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1uN-2C-Hex" secondAttribute="height" multiplier="1:1" id="OoG-un-UB8"/>
@@ -120,7 +120,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="SectionHeaderChoose" width="26" height="26"/>
         <image name="sound-pause" width="9" height="14"/>
+        <image name="thumbnail-no-selected" width="26" height="26"/>
     </resources>
 </document>

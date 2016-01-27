@@ -70,10 +70,10 @@ class VideoCollectionViewCell: UICollectionViewCell {
         selectUnSelectButton.selected = !selectUnSelectButton.selected
         let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
         if selectUnSelectButton.selected == true {
-            selectionImageView.image = UIImage(named:"SectionHeaderChooseHighlight",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            selectionImageView.image = UIImage(named:"thumbnail-selected",inBundle: currentBundle,compatibleWithTraitCollection:nil)
         }else{
 
-            selectionImageView.image = UIImage(named:"SectionHeaderChoose",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            selectionImageView.image = UIImage(named:"thumbnail-no-selected",inBundle: currentBundle,compatibleWithTraitCollection:nil)
         }
         onSharedItemHandler(currentAsset: currentAsset,shouldAdd: selectUnSelectButton.selected)// if selected is = true then we shall add otherwise remove 
 
@@ -100,11 +100,11 @@ class VideoCollectionViewCell: UICollectionViewCell {
 
         if isSelected {
             selectUnSelectButton.selected = true
-            selectionImageView.image = UIImage(named:"SectionHeaderChooseHighlight",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            selectionImageView.image = UIImage(named:"thumbnail-selected",inBundle: currentBundle,compatibleWithTraitCollection:nil)
 
         }else{
             selectUnSelectButton.selected = false
-            selectionImageView.image = UIImage(named:"SectionHeaderChoose",inBundle: currentBundle,compatibleWithTraitCollection:nil)
+            selectionImageView.image = UIImage(named:"thumbnail-no-selected",inBundle: currentBundle,compatibleWithTraitCollection:nil)
         }
         if shouldPlayVideo{
             volumeButton.selected = true
