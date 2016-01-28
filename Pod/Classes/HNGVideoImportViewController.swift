@@ -20,29 +20,24 @@ public class HNGVideoImportViewController: UIViewController {
     
     
     //private var videoList : Array<String> = ["sohail","khan","hello"]
-    private var galleryVideosDic : Dictionary<String,Array<PHAsset>> = Dictionary() // THis dictionary view save videos of gallaryApp, group by dates
+    private var galleryVideosDic : Dictionary<String,Array<VideoBO>> = Dictionary() // THis dictionary view save videos of gallaryApp, group by dates
     private var videoSectionTitles : [String] =  []
-    
     private weak var currentPlayer : AVPlayer?
     private weak var currentPlayingAsset : PHAsset?
-    private var itemsToBeShared : [PHAsset] = []
+    private var itemsToBeShared : [VideoBO] = []
+
+    // MARK: -  IBOutlets
+    @IBOutlet weak var videoCollectionView: UICollectionView!
+    @IBOutlet weak var videoCollectionViewLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var titleLabel: UILabel!
 
     
     
     
-    // MARK: -  IBOutlets
-    @IBOutlet weak var videoCollectionView: UICollectionView!
-    @IBOutlet weak var videoCollectionViewLayout: UICollectionViewFlowLayout!
-    
-    
-    
     // MARK: - View Life Cycle
-    
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        
         videoCollectionView.backgroundColor = UIColor.whiteColor()
         let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
         let nib = UINib(nibName:"VideoCollectionViewCell", bundle:currentBundle)
@@ -52,7 +47,6 @@ public class HNGVideoImportViewController: UIViewController {
         videoCollectionViewLayout.headerReferenceSize = CGSizeMake(videoCollectionView.frame.size.width,40)
         setAudioOutPutPort()
         loadViewAssetsFromGallery()
-        
     }
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -78,20 +72,41 @@ public class HNGVideoImportViewController: UIViewController {
     
     
     @IBAction func shareButtonPressed(sender: AnyObject) {
-        delegate?.videoControllerDidFinishPicking(self, videoArry: itemsToBeShared)
-        self.dismissViewControllerAnimated(true, completion:{()-> Void in
-
-            
-        })
-
         
-
+        let phAssets = getVideoPHAssetsFromVideoBOList(self.itemsToBeShared)
+        delegate?.videoControllerDidFinishPicking(self, videoArry: phAssets)
+            self.dismissViewControllerAnimated(true, completion:{()-> Void in
+        })
     }
     
     
     // MARK: - Private Mehtods
     
-    
+    private func removeSectionVideoFromSharedList(sectionVideos : [VideoBO]){
+        for asset in sectionVideos {
+            asset.isSelected = false
+            self.itemsToBeShared.removeObject(asset)
+        }
+    }
+    private func addSectionVideoInSharedList(sectionVideos : [VideoBO]){
+        
+        for asset in sectionVideos {
+            if asset.isSelected == false {
+                self.itemsToBeShared.append(asset)
+            }
+            asset.isSelected = true
+        }
+
+    }
+    private func getVideoPHAssetsFromVideoBOList(list : [VideoBO])->[PHAsset]{
+        var assets : Array<PHAsset> = []
+        for videoOBJ in list {
+            if let pAsset = videoOBJ.videoAsset {
+                assets.append(pAsset)
+            }
+        }
+        return assets
+    }
     private func setAudioOutPutPort(){ // There is no sound on speaker. iOS Bug.  TO Fix this issue We set audio port
         let session = AVAudioSession.sharedInstance()
         do {
@@ -104,26 +119,40 @@ public class HNGVideoImportViewController: UIViewController {
         }
     
     }
+    private func isSharedListHasNoVideoOFCurrentSection(videos : [VideoBO])-> Bool{
+        
+        for videoOBJ in videos{
+            if self.itemsToBeShared.contains(videoOBJ){
+                return false;
+            }
+        }
+        return true
+    }
+    private func isAllOfSectionVideoSelected(videos : [VideoBO])->Bool{
+        
+        let selectedSet : Set<VideoBO> = Set(self.itemsToBeShared)
+        let videoSet : Set <VideoBO> = Set(videos)
+        let isSubSet : Bool = videoSet.isSubsetOf(selectedSet)
+        return isSubSet
+    
+    }
     private func loadViewAssetsFromGallery(){
 
         
         //let videoAlbum : PHFetchResult = PHAssetCollection.fetchAssetCollectionsWithType(PHAssetCollectionType.SmartAlbum, subtype:PHAssetCollectionSubtype.SmartAlbumVideos, options:nil)
         //let videocollection : PHAssetCollection  = videoAlbum[0] as! PHAssetCollection
         //let assetsFetchResult : PHFetchResult = PHAsset.fetchAssetsInAssetCollection(videocollection, options: nil)
-        
-        
         let videoOptions : PHFetchOptions = PHFetchOptions()
         videoOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate" , ascending:false)]
         videoOptions.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Video.rawValue)
         let assetsFetchResult : PHFetchResult = PHAsset.fetchAssetsWithOptions(videoOptions)
-        
         galleryVideosDic  = groupByVideos(assetsFetchResult)
         videoCollectionView.reloadData()
     }
-    private func groupByVideos(videoList : PHFetchResult)-> Dictionary<String,Array<PHAsset>>{
+    private func groupByVideos(videoList : PHFetchResult)-> Dictionary<String,Array<VideoBO>>{
     
         var array : Array<PHAsset> = []
-        var groupDic : Dictionary<String,Array<PHAsset>> = Dictionary()
+        var groupDic : Dictionary<String,Array<VideoBO>> = Dictionary()
         videoList.enumerateObjectsUsingBlock{(object: AnyObject!,
             count: Int,
             stop: UnsafeMutablePointer<ObjCBool>) in
@@ -131,12 +160,16 @@ public class HNGVideoImportViewController: UIViewController {
                 let asset = object as! PHAsset
                 let createDateString = HNGHelperUtill.getFromatedStringFromDate(asset.creationDate == nil ? NSDate() : asset.creationDate!)
                 if  let _ = groupDic[createDateString]{
-                    var array  = groupDic[createDateString]! as [PHAsset]
-                    array.append(asset)
+                    var array  = groupDic[createDateString]! as [VideoBO]
+                    let video = VideoBO()
+                    video.videoAsset = asset
+                    array.append(video)
                     groupDic[createDateString] = array
                 }else{
-                    var videoArray : Array<PHAsset> = []
-                    videoArray.append(asset)
+                    var videoArray : Array<VideoBO> = []
+                    let video = VideoBO()
+                    video.videoAsset = asset
+                    videoArray.append(video)
                     groupDic[createDateString] = videoArray
                     self.videoSectionTitles.append(createDateString)
                 }
@@ -144,7 +177,6 @@ public class HNGVideoImportViewController: UIViewController {
             }
         }
         HNGImageCachingManager.chache.startCachingImagesForAssets(array, targetSize: CGSizeMake(180, 135), contentMode:PHImageContentMode.AspectFill, options:nil)
-
         return groupDic
     }
 
@@ -183,36 +215,37 @@ public class HNGVideoImportViewController: UIViewController {
         return count
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(HNGConstants.VedioCellIndentifer, forIndexPath: indexPath) as! VideoCollectionViewCell
+        
         // Configure the cell
         let sectionTitle : String = videoSectionTitles[indexPath.section]
         let videoOfCurrentSection : Array = galleryVideosDic[sectionTitle]!
-        let videoAsset : PHAsset = videoOfCurrentSection[indexPath.item]
+        let videoObj : VideoBO = videoOfCurrentSection[indexPath.item]
         var tShouldPlay = false
-        if currentPlayingAsset?.localIdentifier == videoAsset.localIdentifier {
+        if currentPlayingAsset?.localIdentifier == videoObj.videoAsset?.localIdentifier {
             tShouldPlay = true
-        }
-        var tISSelected = false
-        if itemsToBeShared.contains(videoAsset){
-            tISSelected = true
-        }
-        
-        cell.setVideoData(videoAsset,shouldPlayVideo:tShouldPlay,isSelected: tISSelected)
-
-        
+        }        
+        cell.setVideoData(videoObj,shouldPlayVideo:tShouldPlay)
         cell.onPausePlayPressedHandeler({(nowPlaying:AVPlayer?,currentAsset: PHAsset?)-> Void in
             
             self.performSelectorOnMainThread(Selector("stopCurrentPlayer:"), withObject:nowPlaying, waitUntilDone:true)
             self.currentPlayingAsset = currentAsset
         })
-        cell.onShareUnSharePressedHandeler({(currentAsset: PHAsset?,shouldAdd:Bool)->Void in
-            if shouldAdd {
+        cell.onShareUnSharePressedHandeler({(currentAsset: VideoBO?)->Void in
+            if currentAsset!.isSelected {
                 self.itemsToBeShared.append(currentAsset!)
+                if self.isAllOfSectionVideoSelected(videoOfCurrentSection){
+                    collectionView.reloadData()
+                }
             }else{
                 self.itemsToBeShared.removeObject(currentAsset!)
+                if self.isSharedListHasNoVideoOFCurrentSection(videoOfCurrentSection) == false{
+                    collectionView.reloadData()
+                }
             }
         })
-
         return cell
     }
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -221,16 +254,20 @@ public class HNGVideoImportViewController: UIViewController {
         
             let supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:HNGConstants.VedioSupplementaryViewIndentifer, forIndexPath: indexPath) as! HNGHeaderCollectionReusableView
             supplementaryView.titleLabel.text = videoSectionTitles[indexPath.section]
+            if let text = supplementaryView.titleLabel.text {
+                titleLabel.text = HNGHelperUtill.getFormatededStringFromString(text)
+            }
+            let sectionTitle : String = self.videoSectionTitles[indexPath.section]
+            let videoOfCurrentSection : Array = self.galleryVideosDic[sectionTitle]!
+            supplementaryView.selectUnSelectButton.selected = self.isAllOfSectionVideoSelected(videoOfCurrentSection)
             supplementaryView.onAddRemoveAllItemHandler({(shouldAdd:Bool)->Void in
                 
                 let sectionTitle : String = self.videoSectionTitles[indexPath.section]
                 let videoOfCurrentSection : Array = self.galleryVideosDic[sectionTitle]!
                 if shouldAdd {
-                    self.itemsToBeShared.appendContentsOf(videoOfCurrentSection)
+                    self.addSectionVideoInSharedList(videoOfCurrentSection)
                 }else{
-                    for asset in videoOfCurrentSection {
-                        self.itemsToBeShared.removeObject(asset)
-                    }
+                    self.removeSectionVideoFromSharedList(videoOfCurrentSection)
                 }
                 self.videoCollectionView.reloadData()
             })
@@ -259,11 +296,9 @@ public class HNGVideoImportViewController: UIViewController {
             
             let sectionTitle : String = videoSectionTitles[indexPath.section]
             let videoOfCurrentSection : Array = galleryVideosDic[sectionTitle]!
-            let videoAsset : PHAsset = videoOfCurrentSection[indexPath.item]
-            
-            if currentPlayingAsset == videoAsset {
+            let videoAsset : VideoBO = videoOfCurrentSection[indexPath.item]
+            if currentPlayingAsset?.localIdentifier == videoAsset.videoAsset?.localIdentifier  {
                 dowCastCell.onCellWillDisAppearing()
-            
             }
         }
     }
@@ -274,12 +309,9 @@ public class HNGVideoImportViewController: UIViewController {
     func collectionView(collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-    
-
             let width = HNGHelperUtill.scaledWidthWRTDesign(subviewWidth:HNGConstants.cellWidth)
             let height = width * HNGConstants.cellHeightWidthRatio
             return CGSizeMake(width, height)
-            
     }
     
     // MARK: - destructor

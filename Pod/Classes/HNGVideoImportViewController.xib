@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HNGVideoImportViewController" customModule="HNGVideoImport" customModuleProvider="target">
             <connections>
+                <outlet property="titleLabel" destination="vQ7-gF-BpH" id="kjZ-jy-Ljs"/>
                 <outlet property="videoCollectionView" destination="Ahp-Ab-7d1" id="aDD-5D-MR1"/>
                 <outlet property="videoCollectionViewLayout" destination="MEL-Yk-NjY" id="UJA-VM-QP4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -43,13 +44,23 @@
                                 <action selector="shareButtonPressed:" destination="-1" eventType="touchUpInside" id="Hr5-YG-9Zx"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="jan 2016" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQ7-gF-BpH">
+                            <rect key="frame" x="184" y="17" width="368" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.33725490200000002" green="0.32156862749999998" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="wvo-2z-JI5" firstAttribute="centerY" secondItem="014-XX-9kw" secondAttribute="centerY" id="AbY-2h-9qo"/>
                         <constraint firstItem="wvo-2z-JI5" firstAttribute="leading" secondItem="014-XX-9kw" secondAttribute="leading" constant="10" id="Ecc-2m-I42"/>
                         <constraint firstItem="Lv4-e3-6r9" firstAttribute="centerY" secondItem="014-XX-9kw" secondAttribute="centerY" id="EpH-mb-lef"/>
+                        <constraint firstItem="vQ7-gF-BpH" firstAttribute="centerX" secondItem="014-XX-9kw" secondAttribute="centerX" id="a9x-D2-f8P"/>
+                        <constraint firstItem="vQ7-gF-BpH" firstAttribute="height" secondItem="014-XX-9kw" secondAttribute="height" multiplier="0.468" id="aX2-5S-7l1"/>
                         <constraint firstAttribute="trailing" secondItem="Lv4-e3-6r9" secondAttribute="trailing" constant="26" id="cV3-Ic-18Y"/>
+                        <constraint firstItem="vQ7-gF-BpH" firstAttribute="centerY" secondItem="014-XX-9kw" secondAttribute="centerY" id="g0E-kL-aQZ"/>
+                        <constraint firstItem="vQ7-gF-BpH" firstAttribute="width" secondItem="014-XX-9kw" secondAttribute="width" multiplier="0.5" id="iw6-WU-7fR"/>
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ahp-Ab-7d1">

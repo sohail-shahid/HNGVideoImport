@@ -36,10 +36,22 @@ class HNGHelperUtill: NSObject {
         let interval = Int(interval)
         let seconds = interval % 60
         let minutes = (interval / 60) % 60
-        let hours = (interval / 3600)
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        //let hours = (interval / 3600)
+        return String(format: "%d:%02d", minutes, seconds)
     }
     
+    
+    class func getFormatededStringFromString(dateString: String)-> String{
+        
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy - EEEE"
+
+        let date = dateFormatter.dateFromString(dateString)
+        dateFormatter.dateFormat = "MMM yyyy"
+        let dateString = dateFormatter.stringFromDate(date!)
+        return dateString
+    }
     class func getFromatedStringFromDate(date:NSDate)-> String{
         
         

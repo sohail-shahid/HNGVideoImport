@@ -18,7 +18,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fPh-aW-s1M">
                         <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t4U-7e-nMF">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t4U-7e-nMF">
                                 <rect key="frame" x="0.0" y="0.0" width="180" height="135"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfj-Bh-6zH">
@@ -42,19 +42,28 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sound-pause" translatesAutoresizingMaskIntoConstraints="NO" id="zuF-If-LjS">
-                                        <rect key="frame" x="8" y="6" width="18" height="28"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sound-playing" translatesAutoresizingMaskIntoConstraints="NO" id="gfS-Sr-sVh">
+                                        <rect key="frame" x="8" y="10" width="24" height="17"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="zuF-If-LjS" secondAttribute="height" multiplier="9:14" id="rDD-kz-Qq0"/>
+                                            <constraint firstAttribute="height" constant="17" id="Dcg-HU-nTX"/>
+                                            <constraint firstAttribute="width" constant="24" id="zCZ-Hj-83v"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sound-pause" translatesAutoresizingMaskIntoConstraints="NO" id="zuF-If-LjS">
+                                        <rect key="frame" x="8" y="10" width="9" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="14" id="Bbp-iE-uFC"/>
+                                            <constraint firstAttribute="width" constant="9" id="h4Z-W6-nIh"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="BnJ-Nb-qSf" firstAttribute="top" secondItem="Bof-3j-6Mk" secondAttribute="top" id="1HX-na-ENz"/>
-                                    <constraint firstItem="zuF-If-LjS" firstAttribute="height" secondItem="Bof-3j-6Mk" secondAttribute="height" multiplier="0.7" id="2ZR-6w-6lI"/>
-                                    <constraint firstAttribute="bottom" secondItem="zuF-If-LjS" secondAttribute="bottom" constant="6" id="4va-4S-nIM"/>
-                                    <constraint firstItem="zuF-If-LjS" firstAttribute="leading" secondItem="Bof-3j-6Mk" secondAttribute="leading" constant="8" id="JKq-qQ-rBU"/>
+                                    <constraint firstItem="gfS-Sr-sVh" firstAttribute="top" secondItem="Bof-3j-6Mk" secondAttribute="top" constant="10" id="22O-sc-Ud7"/>
+                                    <constraint firstItem="zuF-If-LjS" firstAttribute="top" secondItem="Bof-3j-6Mk" secondAttribute="top" constant="10" id="U5O-BX-ohG"/>
+                                    <constraint firstItem="zuF-If-LjS" firstAttribute="leading" secondItem="Bof-3j-6Mk" secondAttribute="leading" constant="8" id="Utd-64-VjU"/>
+                                    <constraint firstItem="gfS-Sr-sVh" firstAttribute="leading" secondItem="Bof-3j-6Mk" secondAttribute="leading" constant="8" id="nFe-pI-f9q"/>
                                     <constraint firstAttribute="bottom" secondItem="BnJ-Nb-qSf" secondAttribute="bottom" id="tHi-cs-1gx"/>
                                     <constraint firstAttribute="trailing" secondItem="BnJ-Nb-qSf" secondAttribute="trailing" constant="8" id="vgg-Q9-9e0"/>
                                 </constraints>
@@ -110,17 +119,19 @@
             </constraints>
             <connections>
                 <outlet property="durationLabel" destination="BnJ-Nb-qSf" id="bh5-U8-lpL"/>
+                <outlet property="pauseVolumeImageView" destination="zuF-If-LjS" id="gfc-63-Qr2"/>
+                <outlet property="playVolumeImageView" destination="gfS-Sr-sVh" id="gvV-XB-f1T"/>
                 <outlet property="playerContainerView" destination="Sfj-Bh-6zH" id="XV7-J2-FnX"/>
                 <outlet property="selectUnSelectButton" destination="fjy-8B-mVl" id="iWb-5r-DV7"/>
                 <outlet property="selectionImageView" destination="1uN-2C-Hex" id="0L8-vS-k8e"/>
                 <outlet property="thumbNailImageView" destination="t4U-7e-nMF" id="M0c-SJ-adp"/>
                 <outlet property="volumeButton" destination="7C6-tI-ymc" id="3e7-nA-2Np"/>
-                <outlet property="volumeImageView" destination="zuF-If-LjS" id="Wyd-Ic-agu"/>
             </connections>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="sound-pause" width="9" height="14"/>
+        <image name="sound-playing" width="24" height="17"/>
         <image name="thumbnail-no-selected" width="26" height="26"/>
     </resources>
 </document>
