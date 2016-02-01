@@ -269,20 +269,20 @@ public class HNGVideoImportViewController: UIViewController {
                 }else{
                     self.removeSectionVideoFromSharedList(videoOfCurrentSection)
                 }
-                //self.currentPlayer?.pause()
-                //self.currentPlayingAsset = nil
+                self.currentPlayer?.pause()
+                self.currentPlayingAsset = nil
                 //self.videoCollectionView.reloadData()
-                collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleItems())
+                
+                var indexPathOFCurrentCell : Array<NSIndexPath>= []
+                for indexPath_ in collectionView.indexPathsForVisibleItems() {
+                    if indexPath_.section == indexPath.section {
+                        indexPathOFCurrentCell.append(indexPath_)
+                    }
+                }
+                if indexPathOFCurrentCell.count >= 0 {
+                    collectionView.reloadItemsAtIndexPaths(indexPathOFCurrentCell)
 
-               /* if #available(iOS 9.0, *) {
-                    collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleSupplementaryElementsOfKind(kind))
-                } else {
-                    // Fallback on earlier versions
-                    collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleItems())
-
-                }*/
-
-
+                }
 
             })
             return supplementaryView
