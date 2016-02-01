@@ -56,7 +56,7 @@ class VideoCollectionViewCell: UICollectionViewCell {
         
        // self.videoPlayer?.volume = 1.0
         volumeButton.selected = !volumeButton.selected
-        let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
+       // let currentBundle : NSBundle = NSBundle(forClass:object_getClass(self))
         if volumeButton.selected == true {
             
             playVolumeImageView.hidden = false;
@@ -206,6 +206,9 @@ class VideoCollectionViewCell: UICollectionViewCell {
         }
     }
     deinit{
+        
+        let currentContext = UnsafeMutablePointer<()>()
+        videoPlayer?.removeObserver(self, forKeyPath:"rate", context: currentContext)
         videoPlayer?.pause()
         videoPlayer = nil
     }

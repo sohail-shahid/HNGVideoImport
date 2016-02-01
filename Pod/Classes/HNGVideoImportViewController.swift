@@ -251,7 +251,7 @@ public class HNGVideoImportViewController: UIViewController {
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
         if kind == UICollectionElementKindSectionHeader {
-        
+            
             let supplementaryView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier:HNGConstants.VedioSupplementaryViewIndentifer, forIndexPath: indexPath) as! HNGHeaderCollectionReusableView
             supplementaryView.titleLabel.text = videoSectionTitles[indexPath.section]
             if let text = supplementaryView.titleLabel.text {
@@ -269,7 +269,21 @@ public class HNGVideoImportViewController: UIViewController {
                 }else{
                     self.removeSectionVideoFromSharedList(videoOfCurrentSection)
                 }
-                self.videoCollectionView.reloadData()
+                //self.currentPlayer?.pause()
+                //self.currentPlayingAsset = nil
+                //self.videoCollectionView.reloadData()
+                collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleItems())
+
+               /* if #available(iOS 9.0, *) {
+                    collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleSupplementaryElementsOfKind(kind))
+                } else {
+                    // Fallback on earlier versions
+                    collectionView.reloadItemsAtIndexPaths(collectionView.indexPathsForVisibleItems())
+
+                }*/
+
+
+
             })
             return supplementaryView
         
