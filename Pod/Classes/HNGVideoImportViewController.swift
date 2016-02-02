@@ -151,6 +151,7 @@ public class HNGVideoImportViewController: UIViewController {
     }
     private func groupByVideos(videoList : PHFetchResult)-> Dictionary<String,Array<VideoBO>>{
     
+        weak var wSelf = self
         var array : Array<PHAsset> = []
         var groupDic : Dictionary<String,Array<VideoBO>> = Dictionary()
         videoList.enumerateObjectsUsingBlock{(object: AnyObject!,
@@ -171,7 +172,7 @@ public class HNGVideoImportViewController: UIViewController {
                     video.videoAsset = asset
                     videoArray.append(video)
                     groupDic[createDateString] = videoArray
-                    self.videoSectionTitles.append(createDateString)
+                    wSelf?.videoSectionTitles.append(createDateString)
                 }
                 array.append(asset)
             }
@@ -193,7 +194,7 @@ public class HNGVideoImportViewController: UIViewController {
     
     class public  func showVideoImportViewController(controller:UIViewController, withDelegate:HNGVideoImportViewControllerDelegate?){
         let videoImprtVC : HNGVideoImportViewController = HNGVideoImportViewController(nibName:"HNGVideoImportViewController", bundle:NSBundle(forClass: object_getClass(self)))
-        //videoImprtVC.delegate = withDelegate
+        videoImprtVC.delegate = withDelegate
         controller.presentViewController(videoImprtVC, animated: true, completion: nil)
     }
     
@@ -228,21 +229,23 @@ public class HNGVideoImportViewController: UIViewController {
             tShouldPlay = true
         }        
         cell.setVideoData(videoObj,shouldPlayVideo:tShouldPlay)
+        weak var wSelf = self
         cell.onPausePlayPressedHandeler({(nowPlaying:AVPlayer?,currentAsset: PHAsset?)-> Void in
             
-            self.performSelectorOnMainThread(Selector("stopCurrentPlayer:"), withObject:nowPlaying, waitUntilDone:true)
-            self.currentPlayingAsset = currentAsset
+            wSelf?.performSelectorOnMainThread(Selector("stopCurrentPlayer:"), withObject:nowPlaying, waitUntilDone:true)
+            wSelf?.currentPlayingAsset = currentAsset
         })
         cell.onShareUnSharePressedHandeler({(currentAsset: VideoBO?)->Void in
             if currentAsset!.isSelected {
-                self.itemsToBeShared.append(currentAsset!)
-                if self.isAllOfSectionVideoSelected(videoOfCurrentSection){
-                    collectionView.reloadData()
+                wSelf?.itemsToBeShared.append(currentAsset!)
+                let flag = wSelf?.isAllOfSectionVideoSelected(videoOfCurrentSection)
+                if flag == true {
+                    wSelf?.videoCollectionView.reloadData()
                 }
             }else{
-                self.itemsToBeShared.removeObject(currentAsset!)
-                if self.isSharedListHasNoVideoOFCurrentSection(videoOfCurrentSection) == false{
-                    collectionView.reloadData()
+                wSelf?.itemsToBeShared.removeObject(currentAsset!)
+                if wSelf?.isSharedListHasNoVideoOFCurrentSection(videoOfCurrentSection) == false{
+                    wSelf?.videoCollectionView.reloadData()
                 }
             }
         })
@@ -259,28 +262,27 @@ public class HNGVideoImportViewController: UIViewController {
             }
             let sectionTitle : String = self.videoSectionTitles[indexPath.section]
             let videoOfCurrentSection : Array = self.galleryVideosDic[sectionTitle]!
+            weak var wSelf = self
             supplementaryView.selectUnSelectButton.selected = self.isAllOfSectionVideoSelected(videoOfCurrentSection)
             supplementaryView.onAddRemoveAllItemHandler({(shouldAdd:Bool)->Void in
                 
-                let sectionTitle : String = self.videoSectionTitles[indexPath.section]
-                let videoOfCurrentSection : Array = self.galleryVideosDic[sectionTitle]!
+                let sectionTitle : String = wSelf!.videoSectionTitles[indexPath.section]
+                let videoOfCurrentSection : Array = wSelf!.galleryVideosDic[sectionTitle]!
                 if shouldAdd {
-                    self.addSectionVideoInSharedList(videoOfCurrentSection)
+                    wSelf?.addSectionVideoInSharedList(videoOfCurrentSection)
                 }else{
-                    self.removeSectionVideoFromSharedList(videoOfCurrentSection)
+                    wSelf?.removeSectionVideoFromSharedList(videoOfCurrentSection)
                 }
-                self.currentPlayer?.pause()
-                self.currentPlayingAsset = nil
-                //self.videoCollectionView.reloadData()
-                
+                wSelf?.currentPlayer?.pause()
+                wSelf?.currentPlayingAsset = nil
                 var indexPathOFCurrentCell : Array<NSIndexPath>= []
-                for indexPath_ in collectionView.indexPathsForVisibleItems() {
+                for indexPath_ in wSelf!.videoCollectionView.indexPathsForVisibleItems() {
                     if indexPath_.section == indexPath.section {
                         indexPathOFCurrentCell.append(indexPath_)
                     }
                 }
                 if indexPathOFCurrentCell.count >= 0 {
-                    collectionView.reloadItemsAtIndexPaths(indexPathOFCurrentCell)
+                    wSelf?.videoCollectionView.reloadItemsAtIndexPaths(indexPathOFCurrentCell)
 
                 }
 
@@ -333,6 +335,12 @@ public class HNGVideoImportViewController: UIViewController {
      deinit{
         print("deinit")
         HNGImageCachingManager.chache.resetCachedAssets()
+        galleryVideosDic.removeAll()
+        videoSectionTitles.removeAll(keepCapacity: false)
+        currentPlayer?.pause()
+        currentPlayer = nil
+        itemsToBeShared.removeAll(keepCapacity: false)
+        
     }
 
     /*
